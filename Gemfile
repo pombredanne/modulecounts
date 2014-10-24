@@ -1,16 +1,17 @@
 source 'http://rubygems.org'
+ruby "2.1.2"
 
-gem 'rails', '3.0.20'
+gem 'rails', '3.2.18'
 
 gem 'rake', '0.9.2.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'pg', '0.10.1'
-gem 'pg', '0.11.0'
+gem 'pg', '0.17.1'
+
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -35,3 +36,5 @@ end
 
 
 gem 'httparty'
+
+gem 'jsonpath'
