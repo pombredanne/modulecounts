@@ -5,6 +5,19 @@ class Repository < ActiveRecord::Base
   has_one :repository_stats, :dependent => :destroy
   has_one :sampler, :dependent => :destroy
 
+  def js_timeseries(start=nil, finish=nil)
+    scope = counts
+    if start
+      scope = scope.where("record_date > ?", start)
+    end
+
+    if finish
+      scope = scope.where("record_date < ?", finish)
+    end
+
+    scope.order(:record_date).collect { |c| [c.record_date.to_i * 1000, c.value] }
+  end
+
   def last_week
     day_sequence(Time.now.utc - 6.days, 7)
   end
@@ -60,7 +73,7 @@ class Repository < ActiveRecord::Base
   end
 
   def count_for_date(date)
-    self.counts.select { |c| c.record_date.to_date == date }.first
+    self.counts.where("date_trunc('day', counts.record_date) = date(?)", date).first
   end
 
 end
